@@ -162,6 +162,56 @@ int main() {
     }
     printf("\n");
 
+    // 문장별로 변경시 추가/삭제되어야 할 문자 개수
+    int initial[count];
+    int additional[count];
+
+    // 문자수 등 증감 연산
+    for (int i = 1; i < count - 1; i++) {
+        initial[i] = newline_number[i] - newline_number[i - 1] - 1;
+    }
+    for (int i = 1; i < count - 1; i += 2) {
+        additional[i] = initial[i + 1] - initial[i];
+        printf("%d번째\n", i);
+        printf("%d %d\n", initial[i], additional[i]);
+    }
+
+    // 임시 문자 배열에 첫문장 채우기(편의성)
+    for (int i = 0; i < SIZE; i++) {
+        mod_text[i] = '0';
+//        printf("%c", mod_text[i]);
+    }
+
+    // 문장 길이 변경 및 치환
+    // 버그 방지를 위한 임시배열 2번쨰
+    char tmp2[SIZE] = {0};
+    for (int i = 0; i < newline_number[0] + 100; i++) {
+        tmp2[i] = text[0][i];
+        printf("%c", tmp2[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < SIZE; i++) {
+        char t[SIZE];
+        int a = 0;
+        int b = 0;
+        mod_text[i] = tmp2[i];
+        while (exact_num[0][i] == 1) {
+            for (int j = i; j < SIZE; j++) {
+//                t[j] = tmp2[j];
+            }
+            i++;
+        }
+        printf("%c", mod_text[i]);
+    }
+//    for (int i = 0; i < SIZE; i++) {
+//        if (exact_num[0][i] == 0) {
+//            tmp2[i] = text[0][i];
+//            text[0][i] = ' ';
+//            text[0][i + 1] = tmp2[i];
+//        }
+//        printf("%c", tmp2[i]);
+//    }
+
     return 0;
 }
 
@@ -175,6 +225,9 @@ void return_exact(char a[][SIZE], int b[][SIZE], int c, int i, int j) {
         if (a[0][l + 1] == a[i + 1][k + 2]) {
             printf("%3d ", l);
             b[i][l] = 1;
+            if (a[0][l + 2] == a[i + 1][k + 3]) {
+                b[i][l + 2] = 1;
+            }
         }
         k++;
         l++;
