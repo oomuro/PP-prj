@@ -214,6 +214,14 @@ int main() {
     }
     printf("\n");
 
+    for (i = 0; i < magic; i++) {
+        for (j = 0; j < newline; j++) {
+            target[i][j] = 0;
+            printf("%d", target[i][j]);
+        }
+        printf("\n");
+    }
+
     return 0;
 }
 

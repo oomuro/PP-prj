@@ -102,6 +102,7 @@ int main() {
     }
 
     change(text, odd, even, magic, exact, j, 0, length_odd, length_even, difference);
+    change(text, odd, even, magic, exact, j, 1, length_odd, length_even, difference);
 
     return 0;
 }
@@ -130,6 +131,7 @@ void match_exact(char text[SIZE], char odd[][SIZE], int magic, int exact[][SIZE]
 
 void change(char text[SIZE], char odd[][SIZE], char even[][SIZE], int magic, int exact[][SIZE], int j, int i,
             int length_odd[], int length_even[], int difference[]) {
+
     int nth = 0;
     match_exact(text, odd, magic, exact, nth, j);
 
@@ -182,32 +184,44 @@ void change(char text[SIZE], char odd[][SIZE], char even[][SIZE], int magic, int
     temp[i] = text[i];
 //    }
     int count4 = 0;
-    newline += line_diff[0];
-    if (difference > 0) {
-        for (i = newline - 1; i >= 0; i--) {
 
+    newline += line_diff[i];
+
+    // 루프 수정 필요
+    if (difference > 0) {
+        count4 = target_end[i];
+        for (j = newline - 1; j >= 0; j--) {
+            while (count4 >= -1) {
+                text[j + difference[i] * (target_end[i] - count4)] = text[j];
+                if (target[i][target_end[i]] == j) {
+                    count4--;
+                }
+            }
         }
     } else if (difference < 0) {
-        for (i = 0; i < newline; i++) {
-
+        count4 = target_end[i];
+        for (j = 0; j < newline; j++) {
+//            while (count4 >= -1) {
+//                text[j + ]
+//            }
         }
     }
 
-    for (int i = 0; i < SIZE; i++) {
+    for (int k = 0; k < SIZE; k++) {
         int t = 0;
-        if (i == target[0][t]) {
-            for (j = 0; j < length_odd[0]; j++) {
-                text[i + j] = even[0][j];
+        if (k == target[i][t]) {
+            for (j = 0; j < length_odd[i]; j++) {
+                text[k + j] = even[i][j];
             }
             t++;
-            if (t == target_end[0]) {
+            if (t == target_end[i]) {
                 break;
             }
         }
     }
 
-    for (int i = 0; i < newline; i++) {
-        printf("%c", text[i]);
+    for (int k = 0; k < newline; k++) {
+        printf("%c", text[k]);
     }
     printf("\n");
 }
