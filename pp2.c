@@ -103,6 +103,12 @@ int main() {
 
     change(text, odd, even, magic, exact, j, 0, length_odd, length_even, difference);
     change(text, odd, even, magic, exact, j, 1, length_odd, length_even, difference);
+    change(text, odd, even, magic, exact, j, 2, length_odd, length_even, difference);
+
+//    for (i = 0; i < SIZE; i++) {
+//        printf("%c", text[i]);
+//    }
+//    printf("\n");
 
     return 0;
 }
@@ -121,16 +127,9 @@ void return_exact(char text[SIZE], char odd[][SIZE], int exact[][SIZE], int i, i
     }
 }
 
-void match_exact(char text[SIZE], char odd[][SIZE], int magic, int exact[][SIZE], int nth, int j) {
-    for (int i = nth; i < magic; i++) {
-        for (int j = 0; j < newline; j++) {
-            return_exact(text, odd, exact, i, j, 0);
-        }
-    }
-}
-
 void change(char text[SIZE], char odd[][SIZE], char even[][SIZE], int magic, int exact[][SIZE], int j, int i,
             int length_odd[], int length_even[], int difference[]) {
+    printf("i = %d\n", i);
 
     int nth = 0;
     match_exact(text, odd, magic, exact, nth, j);
@@ -188,24 +187,25 @@ void change(char text[SIZE], char odd[][SIZE], char even[][SIZE], int magic, int
     newline += line_diff[i];
 
     // 루프 수정 필요
-    if (difference > 0) {
+    if (difference[i] > 0) {
         count4 = target_end[i];
         for (j = newline - 1; j >= 0; j--) {
-            while (count4 >= -1) {
+            while (count4 != 0) {
                 text[j + difference[i] * (target_end[i] - count4)] = text[j];
                 if (target[i][target_end[i]] == j) {
                     count4--;
                 }
             }
         }
-    } else if (difference < 0) {
-        count4 = target_end[i];
-        for (j = 0; j < newline; j++) {
-//            while (count4 >= -1) {
+    }
+//    else if (difference[i] < 0) {
+//        count4 = target_end[i];
+//        for (j = 0; j < newline; j++) {
+//            while (count4 != 0) {
 //                text[j + ]
 //            }
-        }
-    }
+//        }
+//    }
 
     for (int k = 0; k < SIZE; k++) {
         int t = 0;
@@ -224,4 +224,12 @@ void change(char text[SIZE], char odd[][SIZE], char even[][SIZE], int magic, int
         printf("%c", text[k]);
     }
     printf("\n");
+}
+
+void match_exact(char text[SIZE], char odd[][SIZE], int magic, int exact[][SIZE], int nth, int j) {
+    for (int i = nth; i < magic; i++) {
+        for (int j = 0; j < newline; j++) {
+            return_exact(text, odd, exact, i, j, 0);
+        }
+    }
 }
